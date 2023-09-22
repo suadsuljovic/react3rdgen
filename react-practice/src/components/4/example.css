@@ -1,0 +1,16 @@
+.box {
+  background: red;
+  width: 100%;
+  min-height: 150px;
+}
+
+.myP {
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.myH1 {
+  font-size: 42px;
+  font-weight: 700;
+}
