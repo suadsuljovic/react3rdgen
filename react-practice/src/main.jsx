@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import Class6 from "./components/6";
+import Class7 from "./components/7";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Class6 />
+    <Class7 />
   </React.StrictMode>
 );
