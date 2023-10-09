@@ -1,9 +1,9 @@
-import List from "./List";
+import Search from "./Search";
 
 const Class10 = () => {
   return (
     <div>
-      <List />
+      <Search />
     </div>
   );
 };

@@ -28,7 +28,31 @@ const Search = () => {
     },
   ];
 
-  return <div></div>;
+  const searchInput = "art";
+
+  return (
+    <div>
+      <input />
+
+      {blogPages
+        .filter((item) => {
+          const title = item.title.toLowerCase();
+
+          const check = title.includes(searchInput.toLowerCase());
+
+          return check;
+        })
+        .map((item, index) => {
+          return (
+            <div key={index}>
+              <p>{item.title}</p>
+              <p>{item.subtitle}</p>
+              <p>{item.date}</p>
+            </div>
+          );
+        })}
+    </div>
+  );
 };
 
 export default Search;
