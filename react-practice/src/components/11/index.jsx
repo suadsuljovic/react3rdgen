@@ -9,7 +9,7 @@ const Class11 = () => {
     },
     {
       title: "Cityscape",
-      url: imageUrl,
+      url: "",
     },
     {
       title: "Beach Sunset",
@@ -21,7 +21,7 @@ const Class11 = () => {
     },
     {
       title: "Abstract Art",
-      url: imageUrl,
+      url: "",
     },
     {
       title: "Wildlife",
@@ -45,6 +45,17 @@ const Class11 = () => {
     },
   ];
 
-  return <div></div>;
+  return (
+    <div>
+      {objectsList.map((item, index) => {
+        return (
+          <div key={index}>
+            {item.url && <img src={item.url} alt="" width={240} height={120} />}
+            <p>{item.title}</p>
+          </div>
+        );
+      })}
+    </div>
+  );
 };
 export default Class11;
