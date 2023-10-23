@@ -6,6 +6,7 @@ const ToDoList = () => {
   ]);
 
   const [input, setInput] = useState("");
+  const [editInput, setEditInput] = useState("");
 
   return (
     <div>
@@ -36,14 +37,57 @@ const ToDoList = () => {
                 display: "flex",
               }}
             >
-              <p
-                onClick={() => {
-                  // const newState = [...data];
-                  // newState[index].selected = !newState[index].selected;
+              {item.editing ? (
+                <div style={{ flexGrow: 1 }}>
+                  <input
+                    value={editInput}
+                    onChange={(e) => setEditInput(e.target.value)}
+                    type="text"
+                  />
+                  <button
+                    onClick={() => {
+                      const newState = data.map((item, i) => {
+                        if (i === index) {
+                          return { ...item, text: editInput, editing: false };
+                        }
 
+                        return item;
+                      });
+
+                      setData(newState);
+                      setEditInput("");
+                    }}
+                  >
+                    save
+                  </button>
+                </div>
+              ) : (
+                <p
+                  onClick={() => {
+                    // const newState = [...data];
+                    // newState[index].selected = !newState[index].selected;
+
+                    const newState = data.map((item, i) => {
+                      if (i === index) {
+                        return { ...item, selected: !item.selected };
+                      }
+
+                      return item;
+                    });
+
+                    setData(newState);
+                  }}
+                  style={{ flexGrow: 1 }}
+                >
+                  {item.text}
+                </p>
+              )}
+
+              <button
+                onClick={() => {
                   const newState = data.map((item, i) => {
                     if (i === index) {
-                      return { ...item, selected: !item.selected };
+                      return { ...item, editing: !item.editing };
                     }
 
                     return item;
@@ -51,11 +95,10 @@ const ToDoList = () => {
 
                   setData(newState);
                 }}
-                style={{ flexGrow: 1 }}
+                style={{ width: 50 }}
               >
-                {item.text}
-              </p>
-              <button style={{ width: 50 }}>Edit</button>
+                Edit
+              </button>
               <button
                 onClick={() => {
                   const newState = data.filter((item, i) => i !== index);
