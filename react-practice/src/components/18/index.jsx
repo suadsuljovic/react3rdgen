@@ -4,48 +4,35 @@ import Home from "./Home";
 import Layout from "./Layout";
 import Product from "./Prouct";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: (
       <Layout>
-        <Home />
+        <Outlet />
       </Layout>
     ),
-  },
-  {
-    path: "/home",
-    element: (
-      <Layout>
-        <Home />
-      </Layout>
-    ),
-  },
-  {
-    path: "/product",
-    element: (
-      <Layout>
-        <Product />
-      </Layout>
-    ),
-  },
-  {
-    path: "/about",
-    element: (
-      <Layout>
-        <About />
-      </Layout>
-    ),
-  },
-  {
-    path: "/contact",
-    element: (
-      <Layout>
-        <Contact />
-      </Layout>
-    ),
+    children: [
+      {
+        index: true,
+        path: "home",
+        element: <Home />,
+      },
+      {
+        path: "product",
+        element: <Product />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+      {
+        path: "contact",
+        element: <Contact />,
+      },
+    ],
   },
 ]);
 
