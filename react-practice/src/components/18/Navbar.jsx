@@ -1,13 +1,7 @@
 import { Link } from "react-router-dom";
 import logo from "./logo.svg";
 
-const Navbar = ({ setPage }) => {
-  const changeUrl = (path) => {
-    const obj = { title: path, url: path };
-
-    window.history.pushState(obj, obj.title, obj.url);
-  };
-
+const Navbar = () => {
   return (
     <nav
       style={{
@@ -29,16 +23,16 @@ const Navbar = ({ setPage }) => {
       />
 
       <div style={{ display: "flex" }}>
-        <Link style={{ padding: "0 20px" }} to={"/home"}>
+        <Link style={{ padding: "0 20px", color: "black" }} to={"/home"}>
           Home
         </Link>
-        <Link style={{ padding: "0 20px" }} to={"/product"}>
+        <Link style={{ padding: "0 20px", color: "black" }} to={"/product"}>
           Product
         </Link>
-        <Link style={{ padding: "0 20px" }} to={"/about"}>
+        <Link style={{ padding: "0 20px", color: "black" }} to={"/about"}>
           About
         </Link>
-        <Link style={{ padding: "0 20px" }} to={"/contact"}>
+        <Link style={{ padding: "0 20px", color: "black" }} to={"/contact"}>
           Contact
         </Link>
       </div>
