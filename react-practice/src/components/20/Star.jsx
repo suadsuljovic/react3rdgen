@@ -1,4 +1,4 @@
-const Star = () => {
+const Star = (props) => {
   return (
     <svg
       fill="currentColor"
@@ -8,7 +8,7 @@ const Star = () => {
       strokeWidth="2"
       className="w-4 h-4 text-indigo-500"
       viewBox="0 0 24 24"
-      color="blue"
+      color={props.color}
       width={40}
       height={40}
     >
