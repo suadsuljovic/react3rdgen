@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Button from "./Button";
 import RoundButton from "./RoundButton";
 import Select from "./Select";
@@ -6,36 +7,47 @@ import Text from "./Text";
 import Rating from "./rating";
 
 const ProductCard = (props) => {
+  const [img, setImg] = useState(props.data.imgs.white);
+
   return (
-    <div>
+    <div style={{ display: "flex" }}>
       <div>
-        <img src="" alt="" />
+        <img src={img} alt="" width={400} height={400} />
       </div>
       <div>
         <Text type="t1" text="BRAND NAME" />
-        <Text type="t2" text="The Catcher in the Rye" />
+        <Text type="t2" text={props.data.brandTitle} />
         <div>
-          <Rating value={4} />
-          <Text type="t3" text="4 Reviews" />
+          <Rating value={props.data.reviews} />
+          <Text type="t3" text={props.data.reviewsCount + " Reviews"} />
 
           {/* <SocialIcon type="fb" />
           <SocialIcon type="twitter" />
           <SocialIcon type="intagram" /> */}
         </div>
-        <Text type="t3" text="..." />
+        <Text type="t3" text={props.data.description} />
 
         <div>
           <Text type="t3" text="Color" />
-          <RoundButton color="blue" />
-          <RoundButton color="black" />
-          <RoundButton color="white" />
+          <RoundButton
+            color="blue"
+            onClick={() => setImg(props.data.imgs.blue)}
+          />
+          <RoundButton
+            color="black"
+            onClick={() => setImg(props.data.imgs.black)}
+          />
+          <RoundButton
+            color="white"
+            onClick={() => setImg(props.data.imgs.white)}
+          />
           <Text type="t3" text="Size" />
-          <Select list={["s", "m", "l", "xl"]} />
+          <Select list={props.data.sizes} />
         </div>
         {/* <Divider /> */}
 
         <div>
-          <Text type="t4" text="48 $" />
+          <Text type="t4" text={props.data.price + " $"} />
           <Button title="Button" />
           <Button />
         </div>
