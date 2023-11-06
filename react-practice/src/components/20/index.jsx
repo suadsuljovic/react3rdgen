@@ -17,6 +17,7 @@ const Class20 = () => {
         white: "new-white-product.jpg",
         black: "new-black-product.jpg",
       },
+      sizes: ["m", "l", "xl"],
       price: 59.99,
     },
     {
@@ -34,6 +35,7 @@ const Class20 = () => {
         white: "newest-white-product.jpg",
         black: "newest-black-product.jpg",
       },
+      sizes: ["s", "m", "l", "xl"],
       price: 69.99,
     },
   ];
