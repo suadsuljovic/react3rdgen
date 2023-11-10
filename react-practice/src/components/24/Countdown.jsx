@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Countdown = () => {
   function calculateTimeUntilNovember11() {
     // Set the target date to November 11, 2023
-    const targetDate = new Date("2023-11-11T00:00:00Z");
+    const targetDate = new Date("11.10.2023");
+    targetDate.setHours(21);
 
     // Get the current date and time
     const currentDate = new Date();
 
     // Calculate the difference in milliseconds
     const difference = targetDate - currentDate;
+
+    if (difference < 0) return { hours: 0, minutes: 0, seconds: 0 };
 
     // Calculate hours, minutes, and seconds
     const hours = Math.floor(difference / (1000 * 60 * 60));
@@ -25,6 +28,14 @@ const Countdown = () => {
   }
 
   const [count, setCount] = useState(calculateTimeUntilNovember11());
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCount(calculateTimeUntilNovember11());
+    }, 1000);
+
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <div>
