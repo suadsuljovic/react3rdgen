@@ -1,4 +1,3 @@
-import Fetch from "./fetch";
 import Search from "./search";
 
 const Class25 = () => {
