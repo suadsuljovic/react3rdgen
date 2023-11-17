@@ -139,7 +139,25 @@ const Class26 = () => {
           style={{ margin: "0 10px" }}
           placeholder="quotes per page"
           value={quotesPerPage}
-          onChange={(e) => setQuotesPerPage(e.target.value)}
+          min={0}
+          max={150}
+          onChange={(e) => {
+            if (e.target.value < 0) {
+              setQuotesPerPage(0);
+              return;
+            }
+            if (e.target.value > 150) {
+              setQuotesPerPage(150);
+              return;
+            }
+
+            setQuotesPerPage(e.target.value);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              getQuote();
+            }
+          }}
         />
       </div>
 
