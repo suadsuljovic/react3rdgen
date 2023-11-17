@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Pagination from "./Pagination";
 
 // paginacija postoji samo ako je reusult array veci od nule
 // prvo i drugo dugme rade samo ako je broj quotova veci od 1
@@ -44,7 +45,49 @@ const Class26 = () => {
     }
   };
 
-  console.log(data);
+  const previousPage = async () => {
+    try {
+      if (data.page === 1) {
+        return;
+      }
+
+      let apiURL = "https://api.quotable.io/search/quotes";
+
+      const toNextPage = data?.page - 1;
+
+      apiURL += "?query=" + searchQ;
+      apiURL += "&page=" + toNextPage;
+
+      const response = await fetch(apiURL);
+      const responseData = await response.json();
+
+      setData(responseData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const navigatePage = async (page) => {
+    try {
+      if (data.page === page) {
+        return;
+      }
+
+      let apiURL = "https://api.quotable.io/search/quotes";
+
+      const toNextPage = page;
+
+      apiURL += "?query=" + searchQ;
+      apiURL += "&page=" + toNextPage;
+
+      const response = await fetch(apiURL);
+      const responseData = await response.json();
+
+      setData(responseData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -73,38 +116,11 @@ const Class26 = () => {
             </div>
           );
         })}
-        <div style={{ display: "flex" }}>
-          <button>{"<"}</button>
-          {data?.totalPages >= 1 && (
-            <button
-              style={{
-                backgroundColor: data?.page === 1 ? "white" : "buttonface",
-              }}
-            >
-              1
-            </button>
-          )}
-          {data?.totalPages >= 2 && data?.page < data?.totalPages && (
-            <button
-              style={{
-                backgroundColor: data?.page > 1 ? "white" : "buttonface",
-              }}
-            >
-              {data?.page > 1 ? data?.page : 2}
-            </button>
-          )}
-          {data?.totalPages >= 3 && (
-            <button
-              style={{
-                backgroundColor:
-                  data?.page === data?.totalPages ? "white" : "buttonface",
-              }}
-            >
-              {data.totalPages}
-            </button>
-          )}
-          <button onClick={nextPage}>{">"}</button>
-        </div>
+        <Pagination
+          previousPage={() => {}}
+          nextPage={() => {}}
+          navigatePage={() => {}}
+        />
       </div>
     </div>
   );
