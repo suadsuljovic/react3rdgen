@@ -7,12 +7,18 @@ import Pagination from "./Pagination";
 const Class26 = () => {
   const [data, setData] = useState({});
   const [searchQ, setSearchQ] = useState("");
+  const [quotesPerPage, setQuotesPerPage] = useState(20);
 
   const getQuote = async () => {
     try {
+      if (searchQ === "") {
+        return;
+      }
+
       let apiURL = "https://api.quotable.io/search/quotes";
 
       apiURL += "?query=" + searchQ;
+      apiURL += "&limit=" + quotesPerPage;
 
       const response = await fetch(apiURL);
       const responseData = await response.json();
@@ -28,6 +34,9 @@ const Class26 = () => {
       if (data.page === data.totalPages) {
         return;
       }
+      if (searchQ === "") {
+        return;
+      }
 
       let apiURL = "https://api.quotable.io/search/quotes";
 
@@ -35,6 +44,7 @@ const Class26 = () => {
 
       apiURL += "?query=" + searchQ;
       apiURL += "&page=" + toNextPage;
+      apiURL += "&limit=" + quotesPerPage;
 
       const response = await fetch(apiURL);
       const responseData = await response.json();
@@ -50,6 +60,9 @@ const Class26 = () => {
       if (data.page === 1) {
         return;
       }
+      if (searchQ === "") {
+        return;
+      }
 
       let apiURL = "https://api.quotable.io/search/quotes";
 
@@ -57,6 +70,7 @@ const Class26 = () => {
 
       apiURL += "?query=" + searchQ;
       apiURL += "&page=" + toNextPage;
+      apiURL += "&limit=" + quotesPerPage;
 
       const response = await fetch(apiURL);
       const responseData = await response.json();
@@ -72,6 +86,9 @@ const Class26 = () => {
       if (data.page === page) {
         return;
       }
+      if (searchQ === "") {
+        return;
+      }
 
       let apiURL = "https://api.quotable.io/search/quotes";
 
@@ -79,6 +96,7 @@ const Class26 = () => {
 
       apiURL += "?query=" + searchQ;
       apiURL += "&page=" + toNextPage;
+      apiURL += "&limit=" + quotesPerPage;
 
       const response = await fetch(apiURL);
       const responseData = await response.json();
@@ -91,12 +109,39 @@ const Class26 = () => {
 
   return (
     <div>
-      <input
-        value={searchQ}
-        type="text"
-        onChange={(e) => setSearchQ(e.target.value)}
-      />
-      <button onClick={getQuote}>Get quote</button>
+      <div style={{ marginBottom: 20 }}>
+        <span>Search query</span>
+        <input
+          value={searchQ}
+          style={{ margin: "0 10px" }}
+          type="text"
+          placeholder="query"
+          onChange={(e) => setSearchQ(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              getQuote();
+            }
+            if (e.key === "Escape") {
+              setSearchQ("");
+            }
+          }}
+        />
+
+        <button style={{ margin: "0 10px" }} onClick={getQuote}>
+          Get quote
+        </button>
+      </div>
+
+      <div style={{ marginBottom: 20 }}>
+        <span>Quotes per page</span>
+        <input
+          type="number"
+          style={{ margin: "0 10px" }}
+          placeholder="quotes per page"
+          value={quotesPerPage}
+          onChange={(e) => setQuotesPerPage(e.target.value)}
+        />
+      </div>
 
       <div>
         {data && data.results?.length === 0 && <p>No quotes found</p>}
@@ -117,9 +162,11 @@ const Class26 = () => {
           );
         })}
         <Pagination
-          previousPage={() => {}}
-          nextPage={() => {}}
-          navigatePage={() => {}}
+          page={data?.page}
+          totalPages={data?.totalPages}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          navigatePage={navigatePage}
         />
       </div>
     </div>

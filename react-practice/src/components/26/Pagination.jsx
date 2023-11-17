@@ -1,36 +1,37 @@
-const Pagination = () => {
+const Pagination = (props) => {
+  const { page, totalPages, navigatePage, previousPage, nextPage } = props;
+
   return (
     <div style={{ display: "flex" }}>
       <button onClick={previousPage}>{"<"}</button>
-      {data?.totalPages >= 1 && (
+      {totalPages >= 1 && (
         <button
           style={{
-            backgroundColor: data?.page === 1 ? "white" : "buttonface",
+            backgroundColor: page === 1 ? "white" : "buttonface",
           }}
           onClick={() => navigatePage(1)}
         >
           1
         </button>
       )}
-      {data?.totalPages >= 2 && data?.page < data?.totalPages && (
+      {totalPages >= 2 && page < totalPages && (
         <button
           style={{
-            backgroundColor: data?.page > 1 ? "white" : "buttonface",
+            backgroundColor: page > 1 ? "white" : "buttonface",
           }}
-          onClick={() => navigatePage(data?.page > 1 ? data?.page : 2)}
+          onClick={() => navigatePage(page > 1 ? page : 2)}
         >
-          {data?.page > 1 ? data?.page : 2}
+          {page > 1 ? page : 2}
         </button>
       )}
-      {data?.totalPages >= 3 && (
+      {totalPages >= 3 && (
         <button
           style={{
-            backgroundColor:
-              data?.page === data?.totalPages ? "white" : "buttonface",
+            backgroundColor: page === totalPages ? "white" : "buttonface",
           }}
-          onClick={() => navigatePage(data?.totalPages)}
+          onClick={() => navigatePage(totalPages)}
         >
-          {data.totalPages}
+          {totalPages}
         </button>
       )}
       <button onClick={nextPage}>{">"}</button>
