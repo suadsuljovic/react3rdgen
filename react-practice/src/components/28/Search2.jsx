@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Pagination2 from "./Pagination2";
-import { getQuote } from "./api";
+import { getQuote, navigateToPage } from "./api";
 
 const Search2 = () => {
   const [data, setData] = useState({});
@@ -21,81 +21,35 @@ const Search2 = () => {
     }
   };
 
-  const nextPage = async () => {
-    try {
-      if (data.page === data.totalPages) {
-        return;
-      }
-      if (searchQ === "") {
-        return;
-      }
-
-      let apiURL = "https://api.quotable.io/search/quotes";
-
-      const toNextPage = data?.page + 1;
-
-      apiURL += "?query=" + searchQ;
-      apiURL += "&page=" + toNextPage;
-      apiURL += "&limit=" + quotesPerPage;
-
-      const response = await fetch(apiURL);
-      const responseData = await response.json();
-
-      setData(responseData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const previousPage = async () => {
-    try {
-      if (data.page === 1) {
-        return;
-      }
-      if (searchQ === "") {
-        return;
-      }
-
-      let apiURL = "https://api.quotable.io/search/quotes";
-
-      const toNextPage = data?.page - 1;
-
-      apiURL += "?query=" + searchQ;
-      apiURL += "&page=" + toNextPage;
-      apiURL += "&limit=" + quotesPerPage;
-
-      const response = await fetch(apiURL);
-      const responseData = await response.json();
-
-      setData(responseData);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const navigatePage = async (page) => {
     try {
       if (data.page === page) {
         return;
       }
+      if (page < 1) {
+        return;
+      }
+      if (page > data.totalPages) {
+        return;
+      }
       if (searchQ === "") {
         return;
       }
 
-      let apiURL = "https://api.quotable.io/search/quotes";
+      const responseData = await navigateToPage(searchQ, quotesPerPage, page);
 
-      const toNextPage = page;
-
-      apiURL += "?query=" + searchQ;
-      apiURL += "&page=" + toNextPage;
-      apiURL += "&limit=" + quotesPerPage;
-
-      const response = await fetch(apiURL);
-      const responseData = await response.json();
-
-      setData(responseData);
+      setData(responseData.data);
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const onKeyDown = (e, resetInput) => {
+    if (e.key === "Enter") {
+      getQuoteLocal();
+    }
+    if (e.key === "Escape") {
+      if (resetInput) resetInput();
     }
   };
 
@@ -109,14 +63,7 @@ const Search2 = () => {
           type="text"
           placeholder="query"
           onChange={(e) => setSearchQ(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              getQuote();
-            }
-            if (e.key === "Escape") {
-              setSearchQ("");
-            }
-          }}
+          onKeyDown={(e) => onKeyDown(e, () => setSearchQ(""))}
         />
 
         <button style={{ margin: "0 10px" }} onClick={getQuoteLocal}>
@@ -145,11 +92,7 @@ const Search2 = () => {
 
             setQuotesPerPage(e.target.value);
           }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              getQuote();
-            }
-          }}
+          onKeyDown={onKeyDown}
         />
       </div>
 
@@ -174,8 +117,8 @@ const Search2 = () => {
         <Pagination2
           page={data?.page}
           totalPages={data?.totalPages}
-          previousPage={previousPage}
-          nextPage={nextPage}
+          previousPage={() => navigatePage(data.page - 1)}
+          nextPage={() => navigatePage(data.page + 1)}
           navigatePage={navigatePage}
         />
       </div>
