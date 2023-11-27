@@ -27,12 +27,12 @@ const ContextProvider = (props) => {
     return <div>loading</div>;
   }
 
-  if (!user) {
-    return <div>not Authorized</div>;
-  }
+  // if (!user) {
+  //   return <div>not Authorized</div>;
+  // }
 
   return (
-    <UserContext.Provider value={{ user }}>
+    <UserContext.Provider value={{ user, setUser }}>
       {props.children}
     </UserContext.Provider>
   );
