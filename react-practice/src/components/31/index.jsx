@@ -1,9 +1,15 @@
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Home from "./Home";
+import Login from "./Login";
+import Register from "./Register";
+// pravimo register, login, home page
+// da napravite rute za to i napravite komponenete za svaku rutu
+// / => home; /register => register; /login => login
 
 const router = createBrowserRouter([
-  { path: "/", element: <p>this is home</p> },
-  { path: "/home", element: <p>this is home route</p> },
-  { path: "/home/visit", element: <p>this is nested home route</p> },
+  { path: "/", element: <Home /> },
+  { path: "/login", element: <Login /> },
+  { path: "/register", element: <Register /> },
 ]);
 
 const Class31 = () => {
