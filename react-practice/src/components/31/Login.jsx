@@ -4,10 +4,12 @@
 // i mora da ima login button koji loguje korisnika
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 // za napredne implementirati login preko auth rute na dummy json vebsajtu
 
 function Login() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
 
@@ -20,6 +22,28 @@ function Login() {
 
     return emailRegex.test(email);
   }
+
+  const loginAction = async (formEmail, formPassword) => {
+    try {
+      const response = await fetch("https://dummyjson.com/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username: formEmail,
+          password: formPassword,
+          // expiresInMins: 60, // optional
+        }),
+      });
+
+      const data = await response.json();
+
+      localStorage.setItem("token", data.token);
+
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const handleLogin = async () => {
     let valid = true;
@@ -38,9 +62,9 @@ function Login() {
       setPasswordError("");
     }
 
-    if (valid) {
-      // login funkcija
-    }
+    // if (valid) {
+    loginAction(email, password);
+    // }
   };
 
   return (
