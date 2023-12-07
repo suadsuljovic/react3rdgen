@@ -6,9 +6,13 @@
 // morate imati crveni tekst ispod svakog inputa ako nesto nije tacno
 // i naravno button za register
 
+import { useNavigate } from "react-router-dom";
+
 //za napredne:  koristiti add user rutu za register sa dummy json vebsajta
 
 function Register() {
+  const navigate = useNavigate();
+
   const handleRegister = async () => {
     try {
       const response = await fetch("https://dummyjson.com/users/add", {
@@ -23,7 +27,7 @@ function Register() {
       });
       const data = await response.json();
 
-      console.log(data);
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }

@@ -4,15 +4,21 @@
 // napraviti user state koji saljete preko contexta
 
 import { createContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
-const UserContext = createContext({});
+export const UserContext = createContext({});
 
 const UserContextProvider = (props) => {
   const [user, setUser] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUser = async () => {
       const token = localStorage.getItem("token");
+
+      console.log("tokenDecode", jwtDecode(token));
+
       try {
         const response = await fetch("https://dummyjson.com/auth/users/1", {
           method: "GET" /* or POST/PUT/PATCH/DELETE */,
@@ -24,6 +30,7 @@ const UserContextProvider = (props) => {
         const data = await response.json();
 
         if (data.message === "Invalid/Expired Token!") {
+          navigate("/login");
           throw new Error();
         }
 
@@ -39,7 +46,18 @@ const UserContextProvider = (props) => {
   }, []);
 
   if (!user) {
-    return <div>not authorized</div>;
+    return (
+      <div>
+        <p>not authorized</p>
+        <button
+          onClick={() => {
+            navigate("/login");
+          }}
+        >
+          go to login in page
+        </button>
+      </div>
+    );
   }
 
   return (
