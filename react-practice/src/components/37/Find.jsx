@@ -3,10 +3,10 @@ import SearchItem from "./SearchItem";
 
 const obj = [
   { id: 1, value: "my text 1" },
-  { id: 1, value: "my text 2" },
-  { id: 1, value: "my text 3" },
-  { id: 1, value: "my text 4" },
-  { id: 1, value: "my text 5" },
+  { id: 2, value: "my text 2" },
+  { id: 3, value: "my text 3" },
+  { id: 4, value: "my text 4" },
+  { id: 5, value: "my text 5" },
 ];
 
 // Alternatively, you can initialize the array with a specific value
